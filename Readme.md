@@ -3,8 +3,6 @@ This demo repository explains how to deploy text-to-speech and speech-to-text ca
 Afterwards you can use them in Snowflake Notebooks and Streamlit.
 The app, notebooks and all model artifacts are entirely hosted in Snowflake, fulfilling the highest security and governance standards.
 
-![Cortex Agents](resources/header.jpg)
-
 ## Streamlit App
 The app let's you explore the deployed text-to-speech and speech-to-text capabilities in an interactive way.
 It also allows you to have a conversation with an LLM by actually talking to it and listen to its responses.
