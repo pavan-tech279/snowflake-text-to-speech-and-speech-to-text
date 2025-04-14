@@ -55,11 +55,12 @@ Here you can get a free [Snowflake Trial Account](https://signup.snowflake.com/)
 
 ## Setup
 ```sql
-
 USE ROLE ACCOUNTADMIN;
 
 -- Create warehouse
-CREATE OR REPLACE WAREHOUSE AUDIO_INTERFACE_WH WITH WAREHOUSE_SIZE='MEDIUM' WAREHOUSE_TYPE = 'SNOWPARK-OPTIMIZED';
+CREATE OR REPLACE WAREHOUSE AUDIO_INTERFACE_WH 
+    WITH WAREHOUSE_SIZE='MEDIUM' 
+         WAREHOUSE_TYPE = 'SNOWPARK-OPTIMIZED';
 
 -- Create fresh database
 CREATE OR REPLACE DATABASE AUDIO_INTERFACING_DEMO;
@@ -77,12 +78,12 @@ CREATE GIT REPOSITORY GITHUB_REPO_AUDIO_INTERFACES
 	API_INTEGRATION = 'GITHUB_INTEGRATION_MICHAEL_GORKOW' 
 	COMMENT = 'Github Repository from Michael Gorkow with a demo for text-to-speech and speech-to-text';
 
-
 -- Run the installation of the demo assets
 -- If you want to automatically run the notebooks to deploy the models, set EXECUTE_NOTEBOOKS => TRUE
--- Replace USER with your username
+-- Either use current user or replace USER with your user name
+SET user_name=(SELECT CURRENT_USER());
 EXECUTE IMMEDIATE FROM @AUDIO_INTERFACING_DEMO.PUBLIC.GITHUB_REPO_AUDIO_INTERFACES/branches/main/setup.sql
-  USING (EXECUTE_NOTEBOOKS => FALSE, USER => 'ADMIN') DRY_RUN = FALSE;
+  USING (EXECUTE_NOTEBOOKS => FALSE, USER => $user_name) DRY_RUN = FALSE;
 ```
 
 ## Objects created in your Snowflake Account
