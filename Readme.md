@@ -10,7 +10,7 @@ The app let's you explore the deployed text-to-speech and speech-to-text capabil
 It also allows you to have a conversation with an LLM by actually talking to it and listen to its responses.
 
 Here's a short demo video of the app:  
-<DEMO VIDEO>
+[![Watch the video](http://img.youtube.com/vi/C9-4UV3pORo/maxresdefault.jpg)](https://www.youtube.com/watch?v=C9-4UV3pORo)
 
 ## Text to Speech Models
 The text-to-speech functionality is powered by models from Facebook's [Massive Multilingual Speech project](https://research.facebook.com/publications/scaling-speech-technology-to-1000-languages/).
