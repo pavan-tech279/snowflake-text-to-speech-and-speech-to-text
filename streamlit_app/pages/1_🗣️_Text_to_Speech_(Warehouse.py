@@ -3,7 +3,7 @@ from models.text_to_speech import TextToSpeech, TEXT_TO_SPEECH_LANGUAGES
 from autoplay_audio import play
 from connection import create_snowflake_session
 from snowflake.cortex import translate
-
+import time
 
 # Create Snowflake Session
 if 'session' not in st.session_state:
@@ -60,7 +60,9 @@ if st.button("Generate Text"):
     with st.spinner('Generating audio ...'):
         if st.session_state["translate_input"]:
             text = translate(text, from_language='', to_language = TEXT_TO_SPEECH_LANGUAGES[output_language]['translate'], session=session)
+        start_time = time.time()
         audio = text_to_speech.transform(text)
+        st.write(f"Execution time (seconds): {round(time.time()-start_time,2)}")
         if auto_play:
             play(audio)
         with open('test.wav', "wb") as f:

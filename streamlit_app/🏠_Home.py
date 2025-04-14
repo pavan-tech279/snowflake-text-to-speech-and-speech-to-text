@@ -4,14 +4,13 @@ from connection import create_snowflake_session
 st.title('Audio Interfaces in SiS')
 st.subheader('Talk to LLMs and have SiS read the responses for you.')
 
-st.image('https://github.com/michaelgorkow/snowflake-text-to-speech-and-speech-to-text/resources/header.jpg')
+st.image('https://github.com/michaelgorkow/snowflake-text-to-speech-and-speech-to-text/blob/main/resources/header.jpg?raw=true')
 
 # Variables
 if 'session' not in st.session_state:
     st.session_state['session'] = create_snowflake_session()
 
 session = st.session_state['session']
-
 
 st.markdown("""
 This app let's you explore the deployed text-to-speech and speech-to-text capabilities in an interactive way.
@@ -35,8 +34,6 @@ The following models are available inside SiS:
 | facebook/mms-tts-rus | Russian    |
 | facebook/mms-tts-spa | Spanish    |
 | facebook/mms-tts-swe | Swedish    |
-            
-The same list of models is hosted in the inference service.
 
 ## Speech to Text Models
 The speech-to-text functionality is powered by Whisper models.
@@ -51,4 +48,7 @@ The following models are available inside SiS:
 | medium         | 769 M      | ✓            | ✓            |
 | large-v3-turbo | 809 M      | x            | ✓            |
 
+## Warehouse vs. SPCS
+Models in warehouses are powered by CPUs while SPCS is running on GPUs.  
+You can expect much better performance with GPUs.
 """)

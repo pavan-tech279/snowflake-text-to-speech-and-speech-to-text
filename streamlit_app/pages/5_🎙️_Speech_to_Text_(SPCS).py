@@ -10,7 +10,7 @@ session = st.session_state['session']
 # Get the model inference service
 if 'model_ref_speech_to_text' not in st.session_state:
     reg = Registry(session=session, database_name="AUDIO_INTERFACING_DEMO", schema_name="MODEL_REGISTRY")
-    model_ref = reg.get_model('SPEECH_TO_TEXT').version('LARGE_V3_TURBO')
+    model_ref = reg.get_model('SPEECH_TO_TEXT').version('MULTIPLE')
     st.session_state['model_ref_speech_to_text'] = model_ref
 model_ref = st.session_state['model_ref_speech_to_text']
 

@@ -1,4 +1,5 @@
 import streamlit as st
+import time
 from models.speech_to_text import SpeechToText
 
 # Create a history
@@ -43,7 +44,9 @@ audio = st.audio_input("🎙️ Speak to me")
 if st.button("Generate Text"):
     history.append({'role':'user','type':'audio', 'content':audio})
     with st.spinner('Transcribing ...'):
+        start_time = time.time()
         text = speech_to_text.transform(audio.read())
+        st.write(f"Execution time (seconds): {round(time.time()-start_time,2)}")
     history.append({'role':'ai','type':'text', 'content':text})
 
 st.subheader('History')

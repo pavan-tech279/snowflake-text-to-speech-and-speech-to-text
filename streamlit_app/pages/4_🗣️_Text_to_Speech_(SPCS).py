@@ -2,20 +2,14 @@ import streamlit as st
 from models.text_to_speech import TEXT_TO_SPEECH_LANGUAGES
 from connection import create_snowflake_session
 from snowflake.cortex import translate
-from snowflake.ml.registry import Registry
+import time
 import base64
+from model_calling import text_to_speech_call
 
 # Create Snowflake Session
 if 'session' not in st.session_state:
     st.session_state['session'] = create_snowflake_session()
 session = st.session_state['session']
-
-# Get the model inference service
-if 'model_ref_text_to_speech' not in st.session_state:
-    reg = Registry(session=session, database_name="AUDIO_INTERFACING_DEMO", schema_name="MODEL_REGISTRY")
-    model_ref = reg.get_model('TEXT_TO_SPEECH').version('MULTILANGUAGE')
-    st.session_state['model_ref_text_to_speech'] = model_ref
-model_ref = st.session_state['model_ref_text_to_speech']
 
 # Create a history
 if 'speech_to_text_history_spcs' not in st.session_state:
@@ -59,17 +53,13 @@ It is a brilliant way to bring data to life and make analytics more approachable
 text = st.text_area("Enter your text:", sample_text, height=200)
 
 if st.button("Generate Text"):
-    history.append({'role':'user','type':'text', 'content':text})
     with st.spinner('Generating audio ...'):
         if st.session_state["translate_input"]:
             text = translate(text, from_language='', to_language = TEXT_TO_SPEECH_LANGUAGES[output_language]['translate'], session=session)
-        audio = model_ref.run(
-            [[text,TEXT_TO_SPEECH_LANGUAGES[output_language]['tts']]],
-            function_name="transform",
-            service_name="AUDIO_INTERFACING_DEMO.PUBLIC.TEXT_TO_SPEECH"
-        )
-        audio = audio.iloc[0]['TEXT_TO_SPEECH_RESULT']
-        audio = base64.b64decode(audio)
+        history.append({'role':'user','type':'text', 'content':text})
+        start_time = time.time()
+        audio = text_to_speech_call(session=session, text=text, lang_code=TEXT_TO_SPEECH_LANGUAGES[output_language]['tts'])
+        st.write(f"Execution time (seconds): {round(time.time()-start_time,2)}")
     history.append({'role':'ai','type':'audio', 'content':audio})
 
 st.subheader('History')

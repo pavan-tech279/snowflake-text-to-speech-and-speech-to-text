@@ -4,8 +4,9 @@ channels:
 dependencies:
   - huggingface_accelerate=1.4.0
   - pysoundfile=0.12.1
+  - python=3.11.*
   - pytorch=2.3.0
-  - snowflake-ml-python=1.8.0
+  - snowflake-ml-python=1.7.5
   - snowflake-snowpark-python=
   - streamlit=1.42.0
   - streamlit-extras=0.4.0

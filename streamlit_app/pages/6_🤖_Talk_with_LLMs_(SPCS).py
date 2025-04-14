@@ -9,6 +9,9 @@ from snowflake.cortex import complete
 from snowflake.ml.registry import Registry
 import base64
 import pandas as pd
+from model_calling import speech_to_text_call
+from model_calling import text_to_speech_call
+
 
 # Create Snowflake Session
 if 'session' not in st.session_state:
@@ -78,7 +81,7 @@ with stylable_container(
     # Audio input
     audio = st.audio_input("🎙️ Ask a question!")
 
-# Dummy st.chat_input (needed for autoscrolling)
+# Hidden dummy st.chat_input (needed for autoscrolling)
 st.chat_input('Dummy')
 st.markdown(
     """
@@ -100,14 +103,7 @@ for message in history:
 if audio and not st.session_state['do_not_run']:
     # Convert User Input to Text
     with st.spinner('Transcribing ...'):
-        input_df = pd.DataFrame([[audio.read(), model_size.replace('-','_')]], columns=['AUDIO_INPUT','MODEL'])
-        st.dataframe(input_df)
-        text = model_ref_speech_to_text.run(
-            input_df,
-            function_name="transform",
-            service_name="AUDIO_INTERFACING_DEMO.PUBLIC.SPEECH_TO_TEXT"
-        )
-        text = text.iloc[0]['TRANSCRIPTION']
+        text = speech_to_text_call(session=session, audio_bytes=audio.read(), model_size=model_size.replace('-','_'))
     history.append({'role':'user','type':'combined', 'content':[text,audio]})
     # print to UI
     with st.chat_message('user'):
@@ -121,13 +117,7 @@ if audio and not st.session_state['do_not_run']:
 
     # Turn LLM output into Speech
     with st.spinner('Generating audio ...'):
-        audio_output = model_ref_text_to_speech.run(
-            [[llm_response,TEXT_TO_SPEECH_LANGUAGES[output_language]['tts']]],
-            function_name="transform",
-            service_name="AUDIO_INTERFACING_DEMO.PUBLIC.TEXT_TO_SPEECH"
-        )
-        audio_output = audio_output.iloc[0]['TEXT_TO_SPEECH_RESULT']
-        audio_output = base64.b64decode(audio_output)
+        audio_output = text_to_speech_call(session=session, text=llm_response, lang_code=TEXT_TO_SPEECH_LANGUAGES[output_language]['tts'])
         if auto_play:
             play(audio_output)
         history.append({'role':'ai','type':'combined', 'content':[llm_response,audio_output]})
