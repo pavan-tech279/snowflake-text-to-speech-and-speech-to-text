@@ -69,8 +69,8 @@ CREATE SPEECH_TO_TEXT_NOTEBOOK
     MAIN_FILE = 'SPEECH_TO_TEXT_NOTEBOOK.ipynb';
 
 CREATE OR REPLACE STREAMLIT AUDIO_INTERFACES_APP
-  FROM @AUDIO_INTERFACING_DEMO.PUBLIC.GITHUB_REPO_AUDIO_INTERFACES/branches/main/streamlit_app
-  MAIN_FILE = 'Home.py'
+  FROM '@AUDIO_INTERFACING_DEMO.PUBLIC.GITHUB_REPO_AUDIO_INTERFACES/branches/main/streamlit_app'
+  MAIN_FILE = '🏠_Home.py'
   QUERY_WAREHOUSE = AUDIO_INTERFACE_WH
   TITLE = 'Speech-to-Text and Text-to-Speech models in Snowflake'
   COMMENT = 'Demo Streamlit frontend for Text-to-Speech and Speech-to-Text models.';
