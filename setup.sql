@@ -8,12 +8,10 @@ CREATE ROLE AUDIO_INTERFACING_ROLE;
 CREATE OR REPLACE IMAGE REPOSITORY IMAGE_REPO_SERVICES;
 
 -- Create compute pool for GPU services
-CREATE COMPUTE POOL AUDIO_INTERFACE_GPU_POOL
+CREATE COMPUTE POOL IF NOT EXISTS AUDIO_INTERFACE_GPU_POOL
   MIN_NODES = 1
   MAX_NODES = 3
   INSTANCE_FAMILY = GPU_NV_S;
-
-SHOW SERVICES IN COMPUTE POOL AUDIO_INTERFACE_GPU_POOL;
 
 -- Create External Access Integration
 CREATE OR REPLACE NETWORK RULE hf_network_rule
@@ -75,7 +73,7 @@ CREATE OR REPLACE STREAMLIT AUDIO_INTERFACES_APP
   MAIN_FILE = 'Home.py'
   QUERY_WAREHOUSE = AUDIO_INTERFACE_WH
   TITLE = 'Speech-to-Text and Text-to-Speech models in Snowflake'
-  COMMENT = 'Demo Streamlit frontend for Text-to-Speech and Speech-to-Text models.'
+  COMMENT = 'Demo Streamlit frontend for Text-to-Speech and Speech-to-Text models.';
 
 -- Whether to execute the notebook or not during initial demo setup
 {% if EXECUTE_NOTEBOOKS %}
