@@ -72,6 +72,7 @@ CREATE STREAMLIT AUDIO_INTERFACES_APP
   FROM @AUDIO_INTERFACING_DEMO.PUBLIC.GITHUB_REPO_AUDIO_INTERFACES/branches/main/streamlit_app/
   MAIN_FILE = '🏠_Home.py'
   QUERY_WAREHOUSE = AUDIO_INTERFACE_WH
+  EXTERNAL_ACCESS_INTEGRATIONS = ( 'HF_PYPI_ACCESS_INTEGRATION' )
   TITLE = 'Speech-to-Text and Text-to-Speech models in Snowflake'
   COMMENT = 'Demo Streamlit frontend for Text-to-Speech and Speech-to-Text models.';
 
