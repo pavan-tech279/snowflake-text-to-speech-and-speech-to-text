@@ -7,6 +7,9 @@ The app, notebooks and all model artifacts are entirely hosted in Snowflake, ful
 The app let's you explore the deployed text-to-speech and speech-to-text capabilities in an interactive way.
 It also allows you to have a conversation with an LLM by actually talking to it and listen to its responses.
 
+The high level architecture looks like this:  
+![High Level Architecture](resources/high_level_architecture.png)
+
 Here's a short demo video of the app:  
 [![Watch the video](http://img.youtube.com/vi/C9-4UV3pORo/maxresdefault.jpg)](https://www.youtube.com/watch?v=C9-4UV3pORo)
 
