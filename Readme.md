@@ -80,8 +80,9 @@ CREATE GIT REPOSITORY GITHUB_REPO_AUDIO_INTERFACES
 
 -- Run the installation of the demo assets
 -- If you want to automatically run the notebooks to deploy the models, set EXECUTE_NOTEBOOKS => TRUE
+-- Replace USER with your username
 EXECUTE IMMEDIATE FROM @AUDIO_INTERFACING_DEMO.PUBLIC.GITHUB_REPO_AUDIO_INTERFACES/branches/main/setup.sql
-  USING (EXECUTE_NOTEBOOKS => FALSE) DRY_RUN = FALSE;
+  USING (EXECUTE_NOTEBOOKS => FALSE, USER => 'ADMIN') DRY_RUN = FALSE;
 ```
 
 ## Objects created in your Snowflake Account
